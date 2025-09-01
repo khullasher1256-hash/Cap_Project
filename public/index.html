@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/config.js"></script>
+    <!-- Basic HTML5 document setup -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EverCart Shop - Browse All Products</title>
+    
+    <!-- External stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- 
+    =====================================================
+    SHOP PAGE SPECIFIC STYLES
+    =====================================================
+    
+    This section contains CSS styles specific to the shop page.
+    Includes:
+    - Background gradient and layout
+    - Header navigation styling
+    - Search bar and filtering controls
+    - Product grid layout
+    - Shopping cart and user interaction styles
+    - Footer styling
+    - Responsive design for mobile devices
+    -->
+    <style>
+        /* ==================== BODY AND GLOBAL STYLES ==================== */
+        body {
+            background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        /* ==================== HEADER STYLES ==================== */
+        .main-header {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+            padding: 0.5em 2em;
+            color: #fff;
+        }
+        .main-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2em;
+            margin-left: 2em;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1.2em;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.3em;
+            border-radius: 50%;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .icon {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+        }
+        .cart-count {
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.85em;
+            padding: 2px 7px;
+            position: absolute;
+            top: 0;
+            right: -8px;
+        }
+        .header-actions .icon-btn {
+            position: relative;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 3em auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(37,117,252,0.10);
+            padding: 2.5em 2em 2em 2em;
+        }
+        .search-bar {
+            display: flex;
+            gap: 0.5em;
+            margin: 2em 0 2em 0;
+            justify-content: center;
+        }
+        #product-search {
+            padding: 0.7em 1em;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            width: 300px;
+        }
+        #search-button {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7em 1.5em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #search-button:hover {
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+        }
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2em;
+            background: #f5f8ff;
+            border-radius: 12px;
+            padding: 1.2em 2em;
+            margin-bottom: 2em;
+            justify-content: center;
+            align-items: center;
+        }
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 120px;
+        }
+        .filter-section label, .filter-section h3 {
+            font-size: 1em;
+            color: #2575fc;
+            margin-bottom: 0.3em;
+            font-weight: 600;
+        }
+        .content {
+            display: flex;
+            gap: 2em;
+        }
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+            .filter-bar {
+                flex-direction: column;
+                gap: 1em;
+                padding: 1em;
+            }
+            .filter-section {
+                width: 100%;
+                align-items: stretch;
+            }
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2em;
+        }
+        .product-card {
+            background: #f5f8ff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(37,117,252,0.07);
+            padding: 1.2em;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 24px rgba(37,117,252,0.15);
+        }
+        .product-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 1em;
+        }
+        .product-card h3 {
+            margin: 0.5em 0 0.3em 0;
+            color: #2575fc;
+            font-size: 1.15em;
+        }
+        .product-card p {
+            color: #444;
+            font-size: 0.98em;
+            margin-bottom: 0.7em;
+        }
+        .product-card span {
+            display: block;
+            margin-bottom: 0.4em;
+            color: #333;
+        }
+        .product-card button {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.6em 1.2em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .product-card button:hover {
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+        }
+        .main-footer {
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+            color: #fff;
+            padding: 2em 0 1em 0;
+            margin-top: 3em;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 2em;
+        }
+        .footer-section {
+            flex: 1 1 200px;
+            min-width: 200px;
+            margin-bottom: 1em;
+        }
+        .footer-section h3, .footer-section h4 {
+            margin-top: 0;
+            margin-bottom: 0.7em;
+            font-weight: 700;
+        }
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.5em;
+        }
+        .footer-section ul a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-section ul a:hover {
+            color: #ffd700;
+        }
+        .footer-social a {
+            margin-right: 1em;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 1em;
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        @media (max-width: 800px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5em;
+            }
+            .footer-section {
+                min-width: 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER SECTION ==================== -->
+    <!-- 
+    Navigation header with:
+    - Brand logo/link to homepage
+    - Main navigation menu
+    - User action buttons (admin, login/logout, cart)
+    - Dynamic user state display (name/logout when logged in)
+    -->
+    <header class="main-header">
+        <!-- Brand logo with link to homepage -->
+        <h1><a href="home.html" style="color: white; text-decoration: none;">EverCart</a></h1>
+        
+        <!-- Main navigation menu -->
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="index.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        
+        <!-- User action buttons and dynamic content area -->
+        <div class="header-actions" id="user-actions">
+            <!-- Admin panel access button -->
+            <button class="icon-btn" onclick="window.location.href='admin-login.html'" title="Admin Panel" style="background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 8px; padding: 0.4em 0.8em;">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+            </button>
+            <!-- User login/signup button (hidden when user is logged in) -->
+            <button class="icon-btn" id="login-btn" onclick="window.location.href='login.html'" title="Login / Sign Up">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
+                </svg>
+            </button>
+            <!-- Shopping cart button with dynamic item count badge -->
+            <button class="icon-btn" onclick="window.location.href='cart.html'" title="Cart">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M6 6h15l-1.5 9h-13z"/>
+                    <circle cx="9" cy="21" r="1.5"/>
+                    <circle cx="18" cy="21" r="1.5"/>
+                </svg>
+                <!-- Cart item count badge (shown when items in cart) -->
+                <span id="cart-count" class="cart-count" style="display:none;">0</span>
+            </button>
+        </div>
+    </header>
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <div class="main-content">
+        <!-- Search functionality -->
+        <div class="search-bar">
+            <input type="text" id="product-search" placeholder="Search products...">
+            <button id="search-button">Search</button>
+        </div>
+        
+        <!-- Product filtering controls -->
+        <div class="filter-bar">
+            <!-- Category filter dropdown -->
+            <div class="filter-section">
+                <h3>Category</h3>
+                <select id="category-filter">
+                    <option value="">All</option>
+                    <!-- Options populated dynamically by JavaScript -->
+                </select>
+            </div>
+            
+            <!-- Price range slider -->
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <input type="range" id="price-range" min="0" max="1000" value="1000">
+                <span id="price-display">$0 - $1000</span>
+            </div>
+            
+            <!-- Brand filter dropdown -->
+            <div class="filter-section">
+                <h3>Brand</h3>
+                <select id="brand-filter">
+                    <option value="">All</option>
+                    <!-- Options populated dynamically by JavaScript -->
+                </select>
+            </div>
+            
+            <!-- Rating filter dropdown -->
+            <div class="filter-section">
+                <h3>Rating</h3>
+                <select id="rating-filter">
+                    <option value="">All</option>
+                    <option value="4">4 Stars & Up</option>
+                    <option value="3">3 Stars & Up</option>
+                </select>
+            </div>
+            
+            <!-- Stock availability checkbox -->
+            <div class="filter-section">
+                <h3>Availability</h3>
+                <input type="checkbox" id="availability-filter">
+                <label for="availability-filter">In Stock Only</label>
+            </div>
+        </div>
+        <!-- Product display areas -->
+        <div class="content" style="flex-direction: column; gap: 0;">
+            <section style="flex:1;">
+                <!-- Recommended products section (top-rated from current filter results) -->
+                <div class="recommended-products">
+                    <h2>Recommended Products</h2>
+                    <!-- Grid populated dynamically with top 4 rated products -->
+                    <div id="recommended-products-grid" class="product-grid"></div>
+                </div>
+                
+                <hr>
+                
+                <!-- Main product listing section -->
+                <div class="product-listing">
+                    <!-- Dynamic section title (changes based on active filters) -->
+                    <h2 id="products-section-title">All Products</h2>
+                    
+                    <!-- Active filter indicator (shows current filter state) -->
+                    <div id="active-filter-display" style="display: none; background: #e3f2fd; padding: 0.8rem 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; color: #1565c0; font-weight: 600;">
+                        <span id="filter-text"></span>
+                        <button onclick="clearFilters()" style="background: none; border: none; color: #1565c0; cursor: pointer; float: right; font-weight: 600;">✕ Clear</button>
+                    </div>
+                    
+                    <!-- Main product grid (populated dynamically from database) -->
+                    <div id="product-grid" class="product-grid"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- 
+    =====================================================
+    SHOP PAGE DYNAMIC FUNCTIONALITY SCRIPT
+    =====================================================
+    
+    This script handles:
+    1. Loading and displaying products from MongoDB
+    2. Dynamic filtering by category, brand, price, rating, availability
+    3. Product search functionality
+    4. Recommended products display (top-rated from current filter)
+    5. Shopping cart functionality
+    6. User authentication state management
+    7. URL parameter handling (from homepage category/search links)
+    -->
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        // ==================== DOM ELEMENT REFERENCES ====================
+        const productGrid = document.getElementById('product-grid');
+        const recommendedGrid = document.getElementById('recommended-products-grid');
+        const categoryFilter = document.getElementById('category-filter');
+        const brandFilter = document.getElementById('brand-filter');
+        const ratingFilter = document.getElementById('rating-filter');
+        const priceRange = document.getElementById('price-range');
+        const priceDisplay = document.getElementById('price-display');
+        const availabilityFilter = document.getElementById('availability-filter');
+        const productSearch = document.getElementById('product-search');
+        const searchButton = document.getElementById('search-button');
+
+        // ==================== API FUNCTIONS ====================
+        
+        /**
+         * Fetch products from backend API with optional filtering parameters
+         * @param {Object} params - Filter parameters (search, category, brand, etc.)
+         * @returns {Promise<Array>} Array of product objects from MongoDB
+         */
+        async function fetchProducts(params = {}) {
+            const url = new URL('/api/products', window.location.origin);
+            // Add non-empty parameters to URL query string
+            Object.keys(params).forEach(key => {
+                if (params[key] !== '' && params[key] !== null && params[key] !== undefined) {
+                    url.searchParams.append(key, params[key]);
+                }
+            });
+            const res = await fetch(url);
+            return await res.json();
+        }
+
+        /**
+         * Fetch unique product categories from backend API
+         * @returns {Promise<Array>} Array of category strings
+         */
+        async function fetchCategories() {
+            const res = await fetch('/api/categories');
+            return await res.json();
+        }
+
+        /**
+         * Fetch unique product brands from backend API
+         * @returns {Promise<Array>} Array of brand strings
+         */
+        async function fetchBrands() {
+            const res = await fetch('/api/brands');
+            return await res.json();
+        }
+
+        // ==================== RENDERING FUNCTIONS ====================
+        
+        /**
+         * Render products as cards in the specified grid
+         * @param {Array} products - Array of product objects from MongoDB
+         * @param {HTMLElement} grid - Container element for product cards
+         */
+        function renderProducts(products, grid) {
+            grid.innerHTML = ''; // Clear existing content
+            
+            // Show message if no products found
+            if (products.length === 0) {
+                grid.innerHTML = '<p>No products found.</p>';
+                return;
+            }
+            
+            // Create product cards
+            products.forEach(product => {
+                const div = document.createElement('div');
+                div.className = 'product-card';
+                div.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <span>$${product.price}</span>
+                    <span>${product.brand}</span>
+                    <span>⭐ ${product.rating}</span>
+                    <span>${product.availability ? 'In Stock' : 'Out of Stock'}</span>
+                    <button onclick="addToCart('${product._id}')">Add to Cart</button>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // Populate category and brand filters
+        async function populateFilters() {
+            // Categories
+            const categories = await fetchCategories();
+            categoryFilter.innerHTML = '<option value="">All</option>';
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                categoryFilter.appendChild(option);
+            });
+
+            // Brands
+            const brands = await fetchBrands();
+            brandFilter.innerHTML = '<option value="">All</option>';
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandFilter.appendChild(option);
+            });
+        }
+
+        // Update visual filter indicator
+        function updateFilterDisplay() {
+            const activeFilters = [];
+            const filterDisplay = document.getElementById('active-filter-display');
+            const filterText = document.getElementById('filter-text');
+            const sectionTitle = document.getElementById('products-section-title');
+            
+            // Check active filters
+            if (categoryFilter.value) activeFilters.push(`Category: ${categoryFilter.value}`);
+            if (brandFilter.value) activeFilters.push(`Brand: ${brandFilter.value}`);
+            if (productSearch.value) activeFilters.push(`Search: "${productSearch.value}"`);
+            if (ratingFilter.value) activeFilters.push(`Rating: ${ratingFilter.value}+ stars`);
+            if (priceRange.value < 1000) activeFilters.push(`Max Price: $${priceRange.value}`);
+            if (availabilityFilter.checked) activeFilters.push('In Stock Only');
+            
+            // Update display
+            if (activeFilters.length > 0) {
+                filterDisplay.style.display = 'block';
+                filterText.textContent = `Filtered by: ${activeFilters.join(' | ')}`;
+                sectionTitle.textContent = 'Filtered Products';
+            } else {
+                filterDisplay.style.display = 'none';
+                sectionTitle.textContent = 'All Products';
+            }
+        }
+        
+        // Clear all filters
+        window.clearFilters = function() {
+            categoryFilter.value = '';
+            brandFilter.value = '';
+            productSearch.value = '';
+            ratingFilter.value = '';
+            priceRange.value = 1000;
+            priceDisplay.textContent = '$0 - $1000';
+            availabilityFilter.checked = false;
+            
+            // Update URL to remove parameters
+            const url = new URL(window.location.href);
+            url.search = '';
+            window.history.replaceState({}, document.title, url.toString());
+            
+            applyFilters();
+        };
+
+        // Get filter values and fetch products
+        async function applyFilters() {
+            const params = {
+                search: productSearch.value,
+                category: categoryFilter.value,
+                brand: brandFilter.value,
+                rating: ratingFilter.value,
+                price: priceRange.value,
+                availability: availabilityFilter.checked ? 'true' : ''
+            };
+            const products = await fetchProducts(params);
+            renderProducts(products, productGrid);
+            
+            // Update visual filter indicator
+            updateFilterDisplay();
+
+            // Recommended: show top 4 by rating from filtered results
+            const recommended = [...products].sort((a, b) => b.rating - a.rating).slice(0, 4);
+            renderProducts(recommended, recommendedGrid);
+        }
+
+        // Price range display
+        priceRange.addEventListener('input', () => {
+            priceDisplay.textContent = `$0 - $${priceRange.value}`;
+        });
+
+        // Filter events
+        [categoryFilter, brandFilter, ratingFilter, priceRange, availabilityFilter].forEach(el => {
+            el.addEventListener('change', applyFilters);
+        });
+
+        searchButton.addEventListener('click', applyFilters);
+        productSearch.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') applyFilters();
+        });
+
+        // Handle URL parameters from home page (category/search)
+        async function handleUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            const searchParam = urlParams.get('search');
+            
+            // Set category filter if category parameter exists
+            if (categoryParam && categoryFilter) {
+                categoryFilter.value = categoryParam;
+            }
+            
+            // Set search input if search parameter exists  
+            if (searchParam && productSearch) {
+                productSearch.value = searchParam;
+            }
+        }
+        
+        // Initial load
+        await populateFilters();
+        await handleUrlParams(); // Handle URL parameters first
+        await applyFilters();
+
+        // Add to Cart function (global)
+        window.addToCart = function(productId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert('Please login to add to cart.');
+                window.location.href = 'login.html';
+                return;
+            }
+            fetch('/api/cart/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userEmail: user.email, productId, quantity: 1 })
+            }).then(res => res.json())
+              .then(data => alert(data.message || 'Added to cart!'));
+        };
+
+        // User info and logout logic
+        const userActions = document.getElementById('user-actions');
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            // Hide login button
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) loginBtn.style.display = 'none';
+
+            // Show user name and logout
+            const userNameSpan = document.createElement('span');
+            userNameSpan.textContent = `Hello, ${user.name}`;
+            userNameSpan.style.color = '#fff';
+            userNameSpan.style.marginRight = '1em';
+            userNameSpan.style.fontWeight = 'bold';
+
+            const logoutBtn = document.createElement('button');
+            logoutBtn.textContent = 'Logout';
+            logoutBtn.className = 'icon-btn';
+            logoutBtn.style.background = '#e74c3c';
+            logoutBtn.style.color = '#fff';
+            logoutBtn.style.borderRadius = '8px';
+            logoutBtn.style.padding = '0.5em 1em';
+            logoutBtn.style.marginLeft = '0.5em';
+            logoutBtn.onclick = () => {
+                localStorage.removeItem('user');
+                window.location.reload();
+            };
+
+            userActions.insertBefore(userNameSpan, userActions.firstChild);
+            userActions.insertBefore(logoutBtn, userActions.children[2]);
+        }
+        
+        // Cart count display
+        async function updateCartCount() {
+            const cartCountSpan = document.getElementById('cart-count');
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (user && cartCountSpan) {
+                try {
+                    const res = await fetch(`/api/cart?userEmail=${encodeURIComponent(user.email)}`);
+                    const cart = await res.json();
+                    const count = cart.items ? cart.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+                    
+                    if (count > 0) {
+                        cartCountSpan.textContent = count;
+                        cartCountSpan.style.display = 'inline-block';
+                    } else {
+                        cartCountSpan.style.display = 'none';
+                    }
+                } catch (e) {
+                    cartCountSpan.style.display = 'none';
+                }
+            }
+        }
+        
+        // Update cart count on page load
+        await updateCartCount();
+    });
+    </script>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>EverCart</h3>
+                <p>Your one-stop shop for electronics, fashion, and daily essentials. Enjoy fast delivery and great deals every day!</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="index.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: support@evercart.com</p>
+                <p>Phone: +91-9876543210</p>
+                <p>Address: 123 EverCart Lane, New Delhi, India</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="footer-social">
+                    <a href="#" title="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" style="width:24px;height:24px;filter:invert(50%)"></a>
+                    <a href="#" title="Facebook"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" style="width:24px;height:24px;filter:invert(50%)"></a>
+                    <a href="#" title="Twitter"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" style="width:24px;height:24px;filter:invert(50%)"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 EverCart. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

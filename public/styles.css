@@ -1,0 +1,490 @@
+/* Basic Reset & Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+}
+
+.search-bar {
+    display: flex;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    width: 250px;
+}
+
+.search-bar button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    align-self: flex-start; /* Keeps sidebar at the top */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.filter-section select,
+.filter-section input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filter-section input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recommended-products,
+.product-listing {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.recommended-products h2,
+.product-listing h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.product-card p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.product-card .price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.product-card button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.product-card button:hover {
+    background-color: #218838;
+}
+
+/* Chatbot Styling */
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.chatbot-container.hidden {
+    display: none;
+}
+
+.chatbot-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #0056b3;
+}
+
+.chatbot-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.chatbot-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+}
+
+.bot-message {
+    background-color: #e2e6ea;
+    align-self: flex-start;
+    color: #333;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+}
+
+.chatbot-input {
+    display: flex;
+    border-top: 1px solid #eee;
+}
+
+.chatbot-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 0 0 0 8px;
+}
+
+.chatbot-input button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 0 8px 0;
+    cursor: pointer;
+}
+
+/* Horizontal rule for separation */
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    margin: 30px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Add to your existing style.css */
+
+/* --- General Enhancements (apply to all pages) --- */
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+/* --- Homepage Specific Styles (home.html) --- */
+.home-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+    gap: 40px; /* Space between sections */
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.hero-section {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Vibrant gradient */
+    color: white;
+    padding: 60px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.hero-content h2 {
+    font-size: 3em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.shop-now-button {
+    display: inline-block;
+    background-color: #ffc107;
+    color: #333;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.shop-now-button:hover {
+    background-color: #e0a800;
+    transform: translateY(-3px);
+}
+
+.category-showcase,
+.featured-products,
+.promotions-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.category-showcase h2,
+.featured-products h2,
+.promotions-section h2 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    justify-content: center;
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.category-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%; /* Make category images circular */
+    margin-bottom: 15px;
+    border: 3px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.category-card h3 {
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.promotions-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.promotion-card {
+    background-color: #e6f7ff; /* Light blue background for promotions */
+    border: 1px dashed #007bff;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1 1 350px; /* Allows cards to wrap */
+    max-width: 45%; /* Limit width for two columns */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.promotion-card h3 {
+    font-size: 1.8em;
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.promotion-card p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.promo-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.promo-button:hover {
+    background-color: #0056b3;
+}
+
+/* Adjustments for the product grid on home page featured products */
+#featured-products-grid.product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Slightly wider cards */
+}
+
+/* Responsive adjustments for homepage */
+@media (max-width: 768px) {
+    .hero-content h2 {
+        font-size: 2.2em;
+    }
+    .hero-content p {
+        font-size: 1em;
+    }
+    .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    .category-card img {
+        width: 100px;
+        height: 100px;
+    }
+    .promotion-card {
+        max-width: 90%; /* Single column on smaller screens */
+        flex: 1 1 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-main {
+        padding: 10px;
+        gap: 25px;
+    }
+    .hero-section {
+        padding: 40px 15px;
+    }
+    .hero-content h2 {
+        font-size: 1.8em;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+    }
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | EverCart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+            padding: 0.5em 2em;
+            color: #fff;
+        }
+        .main-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2em;
+            margin-left: 2em;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1.2em;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.3em;
+            border-radius: 50%;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .icon {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+        }
+        .cart-count {
+            background: #e74c3c;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.85em;
+            padding: 2px 7px;
+            position: absolute;
+            top: 0;
+            right: -8px;
+        }
+        .header-actions .icon-btn {
+            position: relative;
+        }
+        .faq-main {
+            max-width: 900px;
+            margin: 3em auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(37,117,252,0.10);
+            padding: 2.5em 2em 2em 2em;
+        }
+        .faq-main h1 {
+            color: #2575fc;
+            margin-bottom: 1em;
+            font-size: 2.2em;
+            font-weight: 700;
+            text-align: center;
+        }
+        .faq-list {
+            margin-top: 2em;
+        }
+        .faq-item {
+            margin-bottom: 2em;
+        }
+        .faq-question {
+            color: #6a11cb;
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 0.5em;
+        }
+        .faq-answer {
+            color: #444;
+            font-size: 1.08em;
+            margin-left: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <h1><a href="home.html" style="color: white; text-decoration: none;">EverCart</a></h1>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="index.html">Shop</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="window.location.href='login.html'" title="Login / Sign Up">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
+                </svg>
+            </button>
+            <button class="icon-btn" onclick="window.location.href='cart.html'" title="Cart">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M6 6h15l-1.5 9h-13z"/>
+                    <circle cx="9" cy="21" r="1.5"/>
+                    <circle cx="18" cy="21" r="1.5"/>
+                </svg>
+                <span id="cart-count" class="cart-count" style="display:none;">0</span>
+            </button>
+        </div>
+    </header>
+    <main class="faq-main">
+        <h1>Frequently Asked Questions</h1>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">How do I create an account?</div>
+                <div class="faq-answer">Click the user icon in the header and fill out the sign up form with your details.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What payment methods do you accept?</div>
+                <div class="faq-answer">We accept all major credit/debit cards, UPI, and PayPal for secure payments.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How can I track my order?</div>
+                <div class="faq-answer">Once your order is shipped, you will receive a tracking link via email and in your account dashboard.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Do you offer free shipping?</div>
+                <div class="faq-answer">Yes, we offer free shipping on orders over $75.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I return or exchange products?</div>
+                <div class="faq-answer">Absolutely! You can return or exchange products within 14 days of delivery. Please see our return policy for details.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I contact customer support?</div>
+                <div class="faq-answer">Visit our Contact page or email us at support@evercart.com. We're here to help!</div>
+            </div>
+        </div>
+    </main>
+    <script>
+    // Cart count logic (same as home.html)
+    document.addEventListener('DOMContentLoaded', async () => {
+        const cartCountSpan = document.getElementById('cart-count');
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            try {
+                const res = await fetch(`/api/cart?userEmail=${encodeURIComponent(user.email)}`);
+                const cart = await res.json();
+                const count = cart.items ? cart.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+                if (count > 0) {
+                    cartCountSpan.textContent = count;
+                    cartCountSpan.style.display = 'inline-block';
+                }
+            } catch (e) {
+                cartCountSpan.style.display = 'none';
+            }
+        }
+    });
+    </script>
+    <!-- Add this just before </body> at the end of your file -->
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>EverCart</h3>
+            <p>Your one-stop shop for electronics, fashion, and daily essentials. Enjoy fast delivery and great deals every day!</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="index.html">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: support@evercart.com</p>
+            <p>Phone: +91-9876543210</p>
+            <p>Address: 123 EverCart Lane, New Delhi, India</p>
+        </div>
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <div class="footer-social">
+                <a href="#" title="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" style="width:24px;height:24px;filter:invert(50%)"></a>
+                <a href="#" title="Facebook"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" style="width:24px;height:24px;filter:invert(50%)"></a>
+                <a href="#" title="Twitter"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter" style="width:24px;height:24px;filter:invert(50%)"></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 EverCart. All rights reserved.
+    </div>
+</footer>
+<style>
+.main-footer {
+    background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+    color: #fff;
+    padding: 2em 0 1em 0;
+    margin-top: 3em;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2em;
+}
+.footer-section {
+    flex: 1 1 200px;
+    min-width: 200px;
+    margin-bottom: 1em;
+}
+.footer-section h3, .footer-section h4 {
+    margin-top: 0;
+    margin-bottom: 0.7em;
+    font-weight: 700;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-section ul li {
+    margin-bottom: 0.5em;
+}
+.footer-section ul a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-section ul a:hover {
+    color: #ffd700;
+}
+.footer-social a {
+    margin-right: 1em;
+    display: inline-block;
+    vertical-align: middle;
+}
+.footer-bottom {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 0.95em;
+    opacity: 0.8;
+}
+@media (max-width: 800px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5em;
+    }
+    .footer-section {
+        min-width: 0;
+        text-align: center;
+    }
+}
+</style>
+
+</body>

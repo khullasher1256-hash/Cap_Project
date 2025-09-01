@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evercart-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: evercart-app
+  template:
+    metadata:
+      labels:
+        app: evercart-app
+    spec:
+      containers:
+      - name: evercart-app
+        image: khullasher1256/evercart-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://mongodb-service:27017/evercart"
+        - name: PORT
+          value: "3000"
+        - name: NODE_ENV
+          value: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evercart-service
+spec:
+  selector:
+    app: evercart-app
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: LoadBalancer

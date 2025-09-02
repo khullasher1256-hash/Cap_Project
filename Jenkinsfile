@@ -14,7 +14,7 @@ pipeline {
 
         // Docker Hub credentials (configure in Jenkins)
 
-        DOCKER_HUB_REPO = 'pulkit197/fitness_tracker-master-copy3-fitness-app'
+        DOCKER_HUB_REPO = 'khullasher1256/evercart-app:latest'
 
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
 
@@ -22,11 +22,11 @@ pipeline {
 
         AWS_REGION = 'us-east-1'
 
-        ECR_REGISTRY = '654485376075.dkr.ecr.us-east-1.amazonaws.com'
+        ECR_REGISTRY = '996180474258.dkr.ecr.us-east-1.amazonaws.com/arunevercart'
 
-        ECR_REPOSITORY = 'fitness-tracker'
+        ECR_REPOSITORY = 'arunevercart'
 
-        AWS_CREDENTIALS = credentials('aws-credentials')
+        AWS_CREDENTIALS = credentials('aws-eks-creds')
 
     }
  
@@ -82,7 +82,7 @@ pipeline {
 
                         -e NODE_ENV=test \
 
-                        -e MONGODB_URI=mongodb://localhost:27017/fitness-tracker-test \
+                        -e MONGODB_URI=mongodb://mongodb-service:27017/evercart-test \
 
                         ${DOCKER_IMAGE}
 
@@ -144,7 +144,7 @@ pipeline {
 
                     echo 'Pushing to AWS ECR...'
 
-                    withCredentials([aws(credentialsId: 'aws-credentials')]) {
+                    withCredentials([aws(credentialsId: 'aws-eks-creds')]) {
 
                         // Login to ECR
 
@@ -278,8 +278,8 @@ pipeline {
                 script{
                     dir('Kubernetes') {
                         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s-token', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                                sh 'kubectl apply -f deployment.yml'
-                                sh 'kubectl apply -f service.yml'
+                                sh 'kubectl apply -f mongodb-deployment.yaml'
+                                sh 'kubectl apply -f app-deployment.yaml'
                         }
                     }
                 }

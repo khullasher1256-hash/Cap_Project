@@ -55,7 +55,7 @@ pipeline {
                             aws eks update-kubeconfig --region us-east-1 --name arun-project-cluster
                             echo "🚀 Updating deployment image in Kubernetes..."
                             kubectl set image deployment/evercart-app \
-                                fitness-tracker-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
+                                evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
                             echo "⏳ Waiting for rollout to complete..."
                             kubectl rollout status deployment/evercart-app
                         """

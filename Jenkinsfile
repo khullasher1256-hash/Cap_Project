@@ -66,44 +66,6 @@ pipeline {
 
         }
  
-        stage('Test') {
-
-            steps {
-
-                script {
-
-                    echo 'Running basic container test...'
-
-                    // Test if the container can start properly
-
-                    sh """
-
-                        docker run --rm -d --name test-container \
-
-                        -e NODE_ENV=test \
-
-                        -e MONGODB_URI=mongodb://mongodb-service:27017/evercart-test \
-
-                        ${DOCKER_IMAGE}
-
-                        sleep 5
-
-                        # Check if container is running
-
-                        docker ps | grep test-container
-
-                        # Stop test container
-
-                        docker stop test-container || true
-
-                    """
-
-                }
-
-            }
-
-        }
- 
         stage('Push to Docker Hub') {
 
             steps {

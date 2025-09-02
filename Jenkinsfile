@@ -6,7 +6,7 @@ pipeline {
 
         // Application configuration
 
-        APP_NAME = 'fitness-tracker'
+        APP_NAME = 'evercart'
 
         IMAGE_TAG = "${BUILD_NUMBER}"
 
@@ -215,64 +215,7 @@ pipeline {
             }
 
         }
- 
-        stage('Health Check') {
 
-            steps {
-
-                script {
-
-                    echo 'Performing health check...'
-
-                    // Wait for application to start
-
-                    sh 'sleep 15'
-
-                    // Check if fitness-app container is running
-
-                    sh """
-
-                        if docker-compose ps fitness-app | grep -q 'Up'; then
-
-                            echo 'Fitness Tracker application is running successfully!'
-
-                        else
-
-                            echo 'Health check failed - application is not running'
-
-                            docker-compose logs fitness-app
-
-                            exit 1
-
-                        fi
-
-                    """
-
-                    // Check if MongoDB is running
-
-                    sh """
-
-                        if docker-compose ps mongodb | grep -q 'Up'; then
-
-                            echo 'MongoDB is running successfully!'
-
-                        else
-
-                            echo 'MongoDB health check failed'
-
-                            docker-compose logs mongodb
-
-                            exit 1
-
-                        fi
-
-                    """
-
-                }
-
-            }
-            
-        }
         stage('Deploy to kubernets'){
             steps{
                 script{

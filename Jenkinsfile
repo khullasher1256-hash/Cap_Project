@@ -1,3 +1,6 @@
+// 
+
+
 pipeline {
 
     agent any
@@ -98,7 +101,6 @@ pipeline {
  
                         # Show logs for debugging
 
-                        docker-compose logs --tail=10 evercart-app
 
                     """
 

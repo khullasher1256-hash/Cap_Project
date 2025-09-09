@@ -140,7 +140,7 @@ pipeline {
  
         stage('Deploy to Kubernetes') {
     steps {
-        withAWS(credentials: 'aws-eks-creds', region: 'us-east-1') {
+        withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
             script {
                 sh """
                     echo "🔄 Updating kubeconfig..."

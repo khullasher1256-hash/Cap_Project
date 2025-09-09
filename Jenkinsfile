@@ -4,6 +4,10 @@
 pipeline {
 
     agent any
+    triggers {
+        githubPush()   // For GitHub webhook
+        
+    }
 
     environment {
 

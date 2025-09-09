@@ -1,5 +1,5 @@
 ---
-- name: Deploy Trakship application with Docker Compose he
+- name: Deploy Trakship application with Docker Compose hello
   hosts: app_servers
   become: yes
   vars:

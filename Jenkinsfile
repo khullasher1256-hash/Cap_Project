@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     echo "📦 Pushing Docker image..."
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-credentials') {
                         sh """
                             docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                             docker push ${DOCKER_IMAGE}:latest
@@ -86,13 +86,14 @@ pipeline {
                             kubectl apply -f mongodb-deployment.yaml
                            
                             # Update application image and deploy
+                            kubectl apply -f app-deployment.yaml
                             kubectl set image deployment/evercart-app \
                                 evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
-                            kubectl apply -f app-deployment.yaml
+                            
                            
                             echo "⏳ Waiting for deployments to complete..."
                             kubectl rollout status deployment/mongodb --timeout=300s
-                            kubectl rollout status deployment/fitness-tracker-app --timeout=300s
+                            kubectl rollout status deployment/evercart-app --timeout=300s
                            
                             echo "📊 Deployment status:"
                             kubectl get deployments
@@ -114,8 +115,8 @@ pipeline {
                            
                             # Wait for LoadBalancer external address
                             for i in {1..10}; do
-                                EXTERNAL_IP=\$(kubectl get service fitness-tracker-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
-                                EXTERNAL_HOSTNAME=\$(kubectl get service fitness-tracker-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null || echo "")
+                                EXTERNAL_IP=\$(kubectl get service evercart-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
+                                EXTERNAL_HOSTNAME=\$(kubectl get service evercart-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null || echo "")
                                
                                 if [ ! -z "\$EXTERNAL_IP" ]; then
                                     echo "🌐 Application URL: http://\$EXTERNAL_IP"
@@ -130,7 +131,7 @@ pipeline {
                             done
                            
                             # Show final service status
-                            kubectl get service fitness-tracker-service
+                            kubectl get service evercart-service
                             echo "✅ Deployment completed successfully!"
                         """
                     }

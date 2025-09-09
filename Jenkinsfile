@@ -162,7 +162,7 @@ pipeline {
 
                             kubectl apply -f app-deployment.yaml
 
-                            kubectl set image deployment/evercart-app \\
+                            kubectl set image deployment/evercart-app \
 
                                 evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
 

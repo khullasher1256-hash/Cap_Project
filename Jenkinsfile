@@ -80,7 +80,7 @@ pipeline {
 
                         while [ \$i -le 5 ]; do
 
-                            if curl -f http://localhost:5000 2>/dev/null; then
+                            if curl -f http://localhost:3000 2>/dev/null; then
 
                                 echo "✅ Application is responding"
 
@@ -98,7 +98,7 @@ pipeline {
  
                         # Show logs for debugging
 
-                        docker-compose logs --tail=10 fitness-app
+                        docker-compose logs --tail=10 evercart-app
 
                     """
 
@@ -162,7 +162,7 @@ pipeline {
 
                             kubectl set image deployment/evercart-app \\
 
-                                fitness-tracker-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
+                                evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
 
  
                             echo "⏳ Waiting for deployments to complete..."

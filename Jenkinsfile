@@ -1,4 +1,4 @@
-// 
+
 
 
 pipeline {
@@ -139,57 +139,26 @@ pipeline {
         }
  
         stage('Deploy to Kubernetes') {
+    steps {
+        withAWS(credentials: 'aws-eks-creds', region: 'us-east-1') {
+            script {
+                sh """
+                    echo "🔄 Updating kubeconfig..."
+                    aws eks update-kubeconfig --region us-east-1 --name arun-cluster
 
-            steps {
+                    echo "🚀 Deploying to Kubernetes..."
+                    kubectl apply -f mongodb-deployment.yaml
+                    kubectl apply -f app-deployment.yaml
 
-                withAWS(credentials: 'AWS_Credentials', region: "${AWS_REGION}") {
-
-                    script {
-
-                        sh """
-
-                            echo "🔄 Updating kubeconfig..."
-
-                            aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}
- 
-                            echo "🚀 Deploying to Kubernetes..."
-
-                            # Deploy MongoDB first
-
-                            kubectl apply -f mongodb-deployment.yaml
- 
-                            # Update application image and deploy
-
-                            kubectl apply -f app-deployment.yaml
-
-                            kubectl set image deployment/evercart-app \
-
-                                evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
-
- 
-                            echo "⏳ Waiting for deployments to complete..."
-
-                            kubectl rollout status deployment/mongodb --timeout=300s
-
-                            kubectl rollout status deployment/evercart-app --timeout=300s
- 
-                            echo "📊 Deployment status:"
-
-                            kubectl get deployments
-
-                            kubectl get services
-
-                            kubectl get pods
-
-                        """
-
-                    }
-
-                }
-
+                    echo "🔄 Updating Deployment image..."
+                    kubectl set image deployment/evercart-app \
+                        evercart-app=${DOCKER_IMAGE}:${DOCKER_TAG} --record
+                """
             }
-
         }
+    }
+}
+
  
         stage('Get LoadBalancer URL') {
 

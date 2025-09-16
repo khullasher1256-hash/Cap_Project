@@ -17,7 +17,7 @@ pipeline {
 
         EKS_CLUSTER_NAME = "arun-cluster"
 
-        AWS_REGION = "us-east-1"
+        AWS_REGION = "us-west-2"
 
     }
 
@@ -144,11 +144,11 @@ pipeline {
  
         stage('Deploy to Kubernetes') {
     steps {
-        withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
+        withAWS(credentials: 'AWS_Credentials', region: 'us-west-2') {
             script {
                 sh """
                     echo "🔄 Updating kubeconfig..."
-                    aws eks update-kubeconfig --region us-east-1 --name arun-cluster
+                    aws eks update-kubeconfig --region us-west-2 --name arun-cluster
 
                     echo "🚀 Deploying to Kubernetes..."
                     kubectl apply -f mongodb-deployment.yaml

@@ -15,7 +15,7 @@ pipeline {
 
         DOCKER_TAG   = "${BUILD_NUMBER}"
 
-        EKS_CLUSTER_NAME = "arun-cluster"
+        EKS_CLUSTER_NAME = "arun-cluster-final"
 
         AWS_REGION = "us-west-2"
 

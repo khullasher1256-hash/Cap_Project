@@ -148,7 +148,7 @@ pipeline {
             script {
                 sh """
                     echo "🔄 Updating kubeconfig..."
-                    aws eks update-kubeconfig --region us-west-2 --name arun-cluster
+                    aws eks update-kubeconfig --region us-west-2 --name arun-cluster-final
 
                     echo "🚀 Deploying to Kubernetes..."
                     kubectl apply -f mongodb-deployment.yaml

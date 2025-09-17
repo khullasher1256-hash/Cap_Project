@@ -15,7 +15,7 @@ pipeline {
 
         DOCKER_TAG   = "${BUILD_NUMBER}"
 
-        EKS_CLUSTER_NAME = "arun-cluster-final"
+        EKS_CLUSTER_NAME = "arun-test-cluster"
 
         AWS_REGION = "us-west-2"
 
@@ -148,7 +148,7 @@ pipeline {
             script {
                 sh """
                     echo "🔄 Updating kubeconfig..."
-                    aws eks update-kubeconfig --region us-west-2 --name arun-cluster-final
+                    aws eks update-kubeconfig --region us-west-2 --name arun-test-cluster
 
                     echo "🚀 Deploying to Kubernetes..."
                     kubectl apply -f mongodb-deployment.yaml
